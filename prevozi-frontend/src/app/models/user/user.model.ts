@@ -6,5 +6,5 @@ export class UserDTO {
   email: string | undefined | null = null;
   password?: string | undefined | null = null;
   rating: number | undefined | null = null;
-  roles: Array<RoleDTO> | undefined | null = null;
+  roles?: Array<RoleDTO> | undefined | null = null;
 }

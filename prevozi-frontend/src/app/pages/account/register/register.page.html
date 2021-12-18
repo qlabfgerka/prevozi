@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>REGISTER</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="flexbox">
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="register()"
+      *ngIf="this.registerForm"
+    >
+      <ion-item>
+        <ion-label position="floating">email</ion-label>
+        <ion-input formControlName="email" type="text" required></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.email.touched && errorControl.email.errors?.required"
+      >
+        Username is required.
+      </span>
+      <span
+        class="error"
+        *ngIf="errorControl.email.touched && errorControl.email.errors?.pattern"
+      >
+        Please enter a valid email.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input formControlName="username" type="text" required></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.username.touched && errorControl.username.errors?.required"
+      >
+        Username is required.
+      </span>
+      <span
+        class="error"
+        *ngIf="errorControl.username.touched && errorControl.username.errors?.pattern"
+      >
+        Username contains illegal characters.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input
+          formControlName="password"
+          type="password"
+          required
+        ></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.password.touched && errorControl.password.errors?.required"
+      >
+        Password is required.
+      </span>
+      <span
+        class="error"
+        *ngIf="errorControl.password.touched && errorControl.password.errors?.minlength"
+      >
+        Please enter a strong password.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Repeat password</ion-label>
+        <ion-input
+          formControlName="repeat"
+          type="password"
+          required
+        ></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.repeat.touched && errorControl.repeat.errors?.required"
+      >
+        Password is required.
+      </span>
+      <div
+        class="break"
+        *ngIf="errorControl.repeat.touched && errorControl.repeat.errors?.required"
+      ></div>
+      <span class="error" *ngIf="error"> {{ error }} </span>
+
+      <div class="break"></div>
+
+      <div class="flexbox">
+        <p>Already have an account? Log in <a routerLink="/login">here</a></p>
+      </div>
+
+      <div class="break"></div>
+
+      <div class="center-text">
+        <ion-button
+          color="light"
+          type="submit"
+          [disabled]="!this.registerForm.valid"
+        >
+          REGISTER
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

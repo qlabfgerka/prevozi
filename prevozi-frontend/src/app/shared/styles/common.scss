@@ -1,0 +1,34 @@
+.center-text {
+  text-align: center;
+}
+
+.top-margin {
+  margin-top: 5rem;
+}
+
+.flexbox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.break {
+  height: 0;
+  flex-basis: 100%;
+  margin-bottom: 10px;
+}
+
+.big-text {
+  font-size: 2.5rem;
+}
+
+.wide {
+  width: 90%;
+}
+
+.error {
+  color: #b00020;
+  font-size: 0.75rem;
+  padding: 1.3rem;
+}
