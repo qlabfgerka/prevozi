@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="flexbox">
+      <ion-title>LOGIN</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="flexbox">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="this.loginForm">
+      <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input formControlName="username" type="text" required></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.username.touched && errorControl.username.errors?.required"
+      >
+        Username is required.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input
+          formControlName="password"
+          type="password"
+          required
+        ></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.password.touched && errorControl.password.errors?.required"
+      >
+        Password is required.
+      </span>
+      <div
+        class="break"
+        *ngIf="errorControl.password.touched && errorControl.password.errors?.required"
+      ></div>
+      <span class="error" *ngIf="error"> {{ error }} </span>
+
+      <div class="break"></div>
+
+      <div class="flexbox">
+        <p>
+          Don't have an account yet? Sign up <a routerLink="/register">here</a>
+        </p>
+      </div>
+
+      <div class="break"></div>
+
+      <div class="center-text">
+        <ion-button
+          color="light"
+          type="submit"
+          [disabled]="!this.loginForm.valid"
+          >LOGIN</ion-button
+        >
+      </div>
+    </form>
+  </div>
+</ion-content>
