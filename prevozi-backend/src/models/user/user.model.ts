@@ -16,13 +16,19 @@ export class User {
   email: string;
 
   @Prop()
-  password: string;
-
-  @Prop()
   rating: number;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Role' }] })
   roles: Role[];
+
+  @Prop()
+  password?: string;
+
+  @Prop()
+  refreshToken?: string;
+
+  @Prop()
+  refreshTokenExpiry?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
