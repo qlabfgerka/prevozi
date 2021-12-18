@@ -1,0 +1,7 @@
+{
+  "name": "prevozi-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

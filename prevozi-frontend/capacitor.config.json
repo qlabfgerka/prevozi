@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "prevozi-frontend",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
