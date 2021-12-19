@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { City } from 'src/models/city/city.model';
 import { Role } from 'src/models/role/role.model';
 import { User } from 'src/models/user/user.model';
 
@@ -34,5 +35,24 @@ export class DtoFunctionsService {
     });
 
     return rolesDTO;
+  }
+
+  public cityToDTO(city: City): City {
+    const cityDTO: City = {
+      id: city.id,
+      value: city.value,
+    };
+
+    return cityDTO;
+  }
+
+  public citiesToDTO(cities: Array<City>): Array<City> {
+    const citiesDTO = new Array<City>();
+
+    cities.forEach((city: City) => {
+      citiesDTO.push(this.cityToDTO(city));
+    });
+
+    return citiesDTO;
   }
 }
