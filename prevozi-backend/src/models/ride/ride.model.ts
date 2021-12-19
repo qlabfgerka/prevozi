@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { City } from '../city/city.model';
 import { CarBrand } from '../car/car.brand.model';
-import { CarModel } from '../car/car.model.model';
 import { CarColor } from '../car/car.color.model';
 import { Reservation } from '../reservation/reservation.model';
 import * as mongoose from 'mongoose';
@@ -34,11 +33,8 @@ export class Ride {
   @Prop()
   luggage: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'CarBrand' })
+  @Prop()
   carBrand: CarBrand;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'CarModel' })
-  carModel: CarModel;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'CarColor' })
   carColor: CarColor;

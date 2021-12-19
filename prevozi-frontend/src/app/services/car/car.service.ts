@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CityDTO } from 'src/app/models/city/city.model';
+import { CarWrapperDTO } from 'src/app/models/car/car.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CityService {
+export class CarService {
   private readonly hostname: string = 'http://localhost:3000';
 
   constructor(private readonly httpClient: HttpClient) {}
 
-  public getCities(): Observable<Array<CityDTO>> {
-    return this.httpClient.get<Array<CityDTO>>(`${this.hostname}/city`);
+  public getCars(): Observable<Array<CarWrapperDTO>> {
+    return this.httpClient.get<Array<CarWrapperDTO>>(`${this.hostname}/car`);
   }
 }

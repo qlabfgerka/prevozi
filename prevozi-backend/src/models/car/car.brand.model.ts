@@ -9,6 +9,9 @@ export class CarBrand {
 
   @Prop()
   value: string;
+
+  @Prop()
+  models: string[];
 }
 
 export const CarBrandSchema = SchemaFactory.createForClass(CarBrand);
