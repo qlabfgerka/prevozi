@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './controllers/user/auth/auth.module';
 import { DtoFunctionsModule } from './services/dto-functions/dto-functions.module';
+import { CityModule } from './controllers/city/city.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { DtoFunctionsModule } from './services/dto-functions/dto-functions.modul
     }),
     AuthModule,
     DtoFunctionsModule,
+    CityModule,
   ],
   controllers: [],
   providers: [],
