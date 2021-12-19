@@ -1,4 +1,4 @@
-import { CarBrandDTO, CarColorDTO, CarModelDTO } from '../car/car.model';
+import { CarBrandDTO, CarColorDTO } from '../car/car.model';
 import { CityDTO } from '../city/city.model';
 import { ReservationDTO } from '../reservation/reservation.model';
 
@@ -12,7 +12,6 @@ export class RideDTO {
   spots: number | undefined | null = null;
   luggage: number | undefined | null = null;
   carBrand: CarBrandDTO | undefined | null = null;
-  carModel: CarModelDTO | undefined | null = null;
   carColor: CarColorDTO | undefined | null = null;
   carRegistration: string | undefined | null = null;
   reservations: Array<ReservationDTO> | undefined | null = null;

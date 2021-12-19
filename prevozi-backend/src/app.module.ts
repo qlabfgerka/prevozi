@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './controllers/user/auth/auth.module';
 import { DtoFunctionsModule } from './services/dto-functions/dto-functions.module';
 import { CityModule } from './controllers/city/city.module';
+import { CarModule } from './controllers/car/car.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CityModule } from './controllers/city/city.module';
     AuthModule,
     DtoFunctionsModule,
     CityModule,
+    CarModule,
   ],
   controllers: [],
   providers: [],
