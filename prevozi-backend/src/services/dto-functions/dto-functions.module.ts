@@ -1,8 +1,19 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { CarColor, CarColorSchema } from 'src/models/car/car.color.model';
+import { City, CitySchema } from 'src/models/city/city.model';
+import { User, UserSchema } from 'src/models/user/user.model';
 import { DtoFunctionsService } from './dto-functions.service';
 
 @Module({
   providers: [DtoFunctionsService],
   exports: [DtoFunctionsService],
+  imports: [
+    MongooseModule.forFeature([
+      { name: City.name, schema: CitySchema },
+      { name: CarColor.name, schema: CarColorSchema },
+      { name: User.name, schema: UserSchema },
+    ]),
+  ],
 })
 export class DtoFunctionsModule {}

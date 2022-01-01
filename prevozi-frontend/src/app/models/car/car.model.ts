@@ -10,6 +10,6 @@ export class CarColorDTO {
 }
 
 export class CarWrapperDTO {
-  brands: CarBrandDTO | undefined | null = null;
-  colors: CarColorDTO | undefined | null = null;
+  brands: Array<CarBrandDTO> | undefined | null = null;
+  colors: Array<CarColorDTO> | undefined | null = null;
 }

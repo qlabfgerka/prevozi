@@ -11,7 +11,7 @@ export class CarService {
 
   constructor(private readonly httpClient: HttpClient) {}
 
-  public getCars(): Observable<Array<CarWrapperDTO>> {
-    return this.httpClient.get<Array<CarWrapperDTO>>(`${this.hostname}/car`);
+  public getCars(): Observable<CarWrapperDTO> {
+    return this.httpClient.get<CarWrapperDTO>(`${this.hostname}/car`);
   }
 }

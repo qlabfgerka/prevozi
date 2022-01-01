@@ -1,11 +1,72 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-title>RIDES</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="flexbox">
-    <ion-button color="primary" (click)="test()">Primary</ion-button>
+    <div *ngIf="!isLoading">
+      <ion-card *ngFor="let ride of rides">
+        <ion-card-header>
+          <ion-card-subtitle>
+            {{ ride.departure.value }}
+            <span *ngFor="let stop of ride.stops"> -> {{ stop.value }} </span>
+          </ion-card-subtitle>
+          <ion-card-title>{{ ride.owner.username }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <h2>Car</h2>
+                <p>
+                  {{ ride.carBrand.value }} {{ ride.carBrand.models[0] }}, {{
+                  ride.carColor.value }}
+                </p>
+                <p>Registration plate: <b>{{ ride.carRegistration }}</b></p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2>Departure time</h2>
+                <p>{{ ride.departureTime | date: 'medium' }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2>Arrival time</h2>
+                <p>{{ ride.arrivalTime | date: 'medium' }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2>Luggage per person</h2>
+                <p>{{ ride.luggage }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2>Price</h2>
+                <p>{{ ride.price }}€</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2>Spots left</h2>
+                <p>{{ ride.spots - ride.reservations.length }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="success" (click)="navigateAddRide()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
