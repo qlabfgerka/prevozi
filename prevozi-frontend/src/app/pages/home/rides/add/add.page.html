@@ -1,0 +1,181 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>OFFER RIDE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="flexbox" *ngIf="!isLoading">
+    <form
+      [formGroup]="addRideForm"
+      (ngSubmit)="addRide()"
+      *ngIf="this.addRideForm"
+      class="wide"
+    >
+      <ion-item>
+        <ion-label position="floating">Place of departure</ion-label>
+        <ion-select
+          okText="Okay"
+          cancelText="Dismiss"
+          formControlName="departure"
+        >
+          <ion-select-option *ngFor="let city of cities" [value]="city.id"
+            >{{city.value}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.departure.touched && errorControl.departure.errors?.required"
+      >
+        Departure is required.
+      </span>
+
+      <ion-item>
+        <ion-button (click)="openDepartureTime()"> Departure </ion-button>
+        <p slot="end">{{ ride.departureTime | date:'short' }}</p>
+      </ion-item>
+
+      <div formArrayName="stops">
+        <ion-item *ngFor="let stop of stops.controls; let i = index">
+          <ion-label position="floating">Stop</ion-label>
+          <ion-select
+            okText="Okay"
+            cancelText="Dismiss"
+            [formControlName]="i"
+            (keyup.enter)="addStop()"
+          >
+            <ion-select-option *ngFor="let city of cities" [value]="city.id"
+              >{{city.value}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <div class="flexbox">
+          <ion-button class="small" type="button" (click)="addStop()">
+            ADD STOP
+          </ion-button>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-button (click)="openArrivalTime()"> Arrival </ion-button>
+        <p slot="end">{{ ride.arrivalTime | date:'short' }}</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Price</ion-label>
+        <ion-input type="number" formControlName="price"></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.price.touched && errorControl.price.errors?.required"
+      >
+        Price is required.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Open spots</ion-label>
+        <ion-input type="number" formControlName="spots"></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.spots.touched && errorControl.spots.errors?.required"
+      >
+        Spots is required.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Luggage per person</ion-label>
+        <ion-input type="number" formControlName="luggage"></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.luggage.touched && errorControl.luggage.errors?.required"
+      >
+        Luggage is required.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Car brand</ion-label>
+        <ion-select
+          okText="Okay"
+          cancelText="Dismiss"
+          formControlName="carBrand"
+        >
+          <ion-select-option *ngFor="let car of cars" [value]="car.value"
+            >{{car.value}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.carColor.touched && errorControl.carColor.errors?.required"
+      >
+        Departure is required.
+      </span>
+
+      <ion-item *ngIf="this.addRideForm.get('carBrand').value">
+        <ion-label position="floating">Car model</ion-label>
+        <ion-select
+          okText="Okay"
+          cancelText="Dismiss"
+          formControlName="carModel"
+        >
+          <ion-select-option *ngFor="let model of getModels()" [value]="model"
+            >{{model}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.carColor.touched && errorControl.carColor.errors?.required && this.addRideForm.get('carBrand').value"
+      >
+        Car model is required.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Car color</ion-label>
+        <ion-select
+          okText="Okay"
+          cancelText="Dismiss"
+          formControlName="carColor"
+        >
+          <ion-select-option *ngFor="let color of colors" [value]="color.id"
+            >{{color.value}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.carColor.touched && errorControl.carColor.errors?.required"
+      >
+        Departure is required.
+      </span>
+
+      <ion-item>
+        <ion-label position="floating">Car registration plate</ion-label>
+        <ion-input
+          placeholder="MB ASD51"
+          formControlName="carRegistration"
+        ></ion-input>
+      </ion-item>
+      <span
+        class="error"
+        *ngIf="errorControl.carRegistration.touched && errorControl.carRegistration.errors?.required"
+      >
+        Car registration is required.
+      </span>
+
+      <div class="break"></div>
+
+      <div class="center-text">
+        <ion-button
+          color="light"
+          type="submit"
+          [disabled]="!this.addRideForm.valid || !this.ride.departureTime || !this.ride.arrivalTime"
+          >SUBMIT</ion-button
+        >
+      </div>
+    </form>
+  </div>
+</ion-content>

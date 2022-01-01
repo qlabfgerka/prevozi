@@ -5,6 +5,7 @@ import { CarBrand } from '../car/car.brand.model';
 import { CarColor } from '../car/car.color.model';
 import { Reservation } from '../reservation/reservation.model';
 import * as mongoose from 'mongoose';
+import { User } from '../user/user.model';
 
 export type RideDocument = Ride & Document;
 
@@ -16,13 +17,13 @@ export class Ride {
   departure: City;
 
   @Prop()
-  departureTime: number;
+  departureTime: Date;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'City' }] })
   stops: City[];
 
   @Prop()
-  arrivalTime: number;
+  arrivalTime: Date;
 
   @Prop()
   price: number;
@@ -44,6 +45,9 @@ export class Ride {
 
   @Prop()
   reservations: Reservation[];
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  owner: User;
 }
 
 export const RideSchema = SchemaFactory.createForClass(Ride);
