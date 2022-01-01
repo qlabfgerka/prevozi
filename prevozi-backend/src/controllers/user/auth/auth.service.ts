@@ -8,11 +8,13 @@ import { nanoid } from 'nanoid';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 import { DtoFunctionsService } from 'src/services/dto-functions/dto-functions.service';
+import { Role, RoleDocument } from 'src/models/role/role.model';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Role.name) private roleModel: Model<RoleDocument>,
     private readonly dtoFunctions: DtoFunctionsService,
     private readonly jwtService: JwtService,
   ) {}
@@ -33,6 +35,7 @@ export class AuthService {
       );
     }
 
+    const roles = await this.roleModel.find();
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(user.password, salt);
 
@@ -41,12 +44,12 @@ export class AuthService {
       username: user.username,
       password: hash,
       rating: 0,
-      //TODO: add roles roles: [],
+      roles,
     });
 
     await newUser.save();
 
-    return this.dtoFunctions.userToDTO(newUser);
+    return await this.dtoFunctions.userToDTO(newUser);
   }
 
   public async validateUser(username: string, password: string): Promise<User> {
@@ -54,7 +57,7 @@ export class AuthService {
 
     if (!result) return null;
 
-    const user = this.dtoFunctions.userToDTO(result);
+    const user = await this.dtoFunctions.userToDTO(result);
     user.password = result.password;
 
     if (await bcrypt.compare(password, user.password)) return user;
@@ -82,7 +85,7 @@ export class AuthService {
 
   public async getUserWithTokens(id: string): Promise<User> {
     const user = await this.userModel.findById(id);
-    const userDTO = this.dtoFunctions.userToDTO(user);
+    const userDTO = await this.dtoFunctions.userToDTO(user);
     userDTO.refreshToken = user.refreshToken;
     userDTO.refreshTokenExpiry = user.refreshTokenExpiry;
 

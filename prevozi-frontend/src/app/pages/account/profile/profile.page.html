@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>PROFILE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!isLoading">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>RATING: {{ user.rating }}</ion-card-subtitle>
+        <ion-card-title>{{ user.username }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label>OFFERING RIDES</ion-label>
+          <ion-checkbox
+            color="primary"
+            [checked]="hasRole('OFFER')"
+            slot="start"
+            (ionChange)="update()"
+          ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>USING RIDES</ion-label>
+          <ion-checkbox
+            color="primary"
+            [checked]="hasRole('USE')"
+            slot="start"
+            (ionChange)="update()"
+          ></ion-checkbox>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

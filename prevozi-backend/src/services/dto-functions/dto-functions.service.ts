@@ -7,7 +7,7 @@ import { CarDTO } from 'src/models/car/car.model';
 import { City, CityDocument } from 'src/models/city/city.model';
 import { Reservation } from 'src/models/reservation/reservation.model';
 import { Ride } from 'src/models/ride/ride.model';
-import { Role } from 'src/models/role/role.model';
+import { Role, RoleDocument } from 'src/models/role/role.model';
 import { User, UserDocument } from 'src/models/user/user.model';
 
 @Injectable()
@@ -16,16 +16,17 @@ export class DtoFunctionsService {
     @InjectModel(City.name) private cityModel: Model<CityDocument>,
     @InjectModel(CarColor.name) private carColorModel: Model<CarColorDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Role.name) private roleModel: Model<RoleDocument>,
   ) {}
 
-  public userToDTO(user: User): User {
+  public async userToDTO(user: User): Promise<User> {
     if (!user) return undefined;
     const userDTO: User = {
       id: user.id,
       email: user.email,
       username: user.username,
       rating: user.rating,
-      roles: this.rolesToDTO(user.roles),
+      roles: this.rolesToDTO(await this.getRoles(user.roles)),
     };
 
     return userDTO;
@@ -132,7 +133,7 @@ export class DtoFunctionsService {
       carColor: this.carColorToDTO(await this.getCarColor(ride.carColor)),
       carRegistration: ride.carRegistration,
       reservations: await this.reservationsToDTO(ride.reservations),
-      owner: this.userToDTO(await this.getUser(ride.owner)),
+      owner: await this.userToDTO(await this.getUser(ride.owner)),
     };
 
     return rideDTO;
@@ -155,7 +156,7 @@ export class DtoFunctionsService {
       id: reservation.id,
       confirmed: reservation.confirmed,
       pickedUp: reservation.pickedUp,
-      user: this.userToDTO(await this.getUser(reservation.user)),
+      user: await this.userToDTO(await this.getUser(reservation.user)),
     };
 
     return reservationDTO;
@@ -199,5 +200,21 @@ export class DtoFunctionsService {
     if (!user) return undefined;
     if (user.username) return await this.userModel.findById(user.id);
     return await this.userModel.findById(user.toString());
+  }
+
+  private async getRole(role: Role): Promise<Role> {
+    if (!role) return undefined;
+    if (role.value) return await this.roleModel.findById(role.id);
+    return await this.roleModel.findById(role.toString());
+  }
+
+  private async getRoles(roles: Array<Role>): Promise<Array<Role>> {
+    const rolesDTO = new Array<Role>();
+
+    for (const role of roles) {
+      rolesDTO.push(await this.getRole(role));
+    }
+
+    return rolesDTO;
   }
 }

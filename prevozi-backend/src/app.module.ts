@@ -6,6 +6,7 @@ import { DtoFunctionsModule } from './services/dto-functions/dto-functions.modul
 import { CityModule } from './controllers/city/city.module';
 import { CarModule } from './controllers/car/car.module';
 import { RideModule } from './controllers/ride/ride.module';
+import { UserModule } from './controllers/user/user.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { RideModule } from './controllers/ride/ride.module';
     CityModule,
     CarModule,
     RideModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

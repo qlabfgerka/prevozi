@@ -4,6 +4,7 @@ import { ViewWillEnter } from '@ionic/angular';
 import { finalize, take } from 'rxjs/operators';
 import { RideDTO } from 'src/app/models/ride/ride.model';
 import { RideService } from 'src/app/services/ride/ride.service';
+import { AuthService } from 'src/app/services/user/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ export class HomePage implements OnInit, ViewWillEnter {
 
   constructor(
     private readonly router: Router,
-    private readonly rideService: RideService
+    private readonly rideService: RideService,
+    private readonly authService: AuthService
   ) {}
 
   ionViewWillEnter(): void {
@@ -27,6 +29,10 @@ export class HomePage implements OnInit, ViewWillEnter {
 
   public navigateAddRide(): void {
     this.router.navigate(['/add']);
+  }
+
+  public openProfile(): void {
+    this.router.navigate([`/profile`]);
   }
 
   private refresh(): void {
