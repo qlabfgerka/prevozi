@@ -10,6 +10,7 @@ import { User, UserSchema } from 'src/models/user/user.model';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshTokenStrategy } from './strategies/jwt.refreshtoken.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
+import { Role, RoleSchema } from 'src/models/role/role.model';
 
 @Module({
   providers: [AuthService, LocalStrategy, JwtStrategy, JwtRefreshTokenStrategy],
@@ -17,14 +18,17 @@ import { LocalStrategy } from './strategies/local.strategy';
   imports: [
     PassportModule,
     DtoFunctionsModule,
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: Role.name, schema: RoleSchema },
+    ]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: '60s',
+          expiresIn: '900s',
         },
       }),
     }),

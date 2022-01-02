@@ -32,6 +32,10 @@ const routes: Routes = [
     component: LoginPage,
     canActivate: [UnAuthGuard],
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/account/profile/profile.module').then( m => m.ProfilePageModule)
+  },
 ];
 
 @NgModule({
