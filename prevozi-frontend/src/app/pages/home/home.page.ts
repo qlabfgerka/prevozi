@@ -35,6 +35,10 @@ export class HomePage implements OnInit, ViewWillEnter {
     this.router.navigate([`/profile`]);
   }
 
+  public openRide(id: string): void {
+    this.router.navigate([`/rides/${id}`]);
+  }
+
   private refresh(): void {
     this.isLoading = true;
     this.rideService

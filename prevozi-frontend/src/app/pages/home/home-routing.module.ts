@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RoleGuard } from 'src/app/guards/role/role.guard';
 
 import { HomePage } from './home.page';
 
@@ -12,6 +13,8 @@ const routes: Routes = [
     path: 'add',
     loadChildren: () =>
       import('./rides/add/add.module').then((m) => m.AddPageModule),
+    canActivate: [RoleGuard],
+    data: { role: 'OFFER' },
   },
   {
     path: 'profile',
@@ -19,6 +22,13 @@ const routes: Routes = [
       import('../account/profile/profile.module').then(
         (m) => m.ProfilePageModule
       ),
+  },
+  {
+    path: 'rides/:id',
+    loadChildren: () =>
+      import('./rides/rides.module').then((m) => m.RidesPageModule),
+    canActivate: [RoleGuard],
+    data: { role: 'USE' },
   },
 ];
 

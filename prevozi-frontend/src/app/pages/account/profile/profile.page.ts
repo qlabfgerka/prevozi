@@ -29,8 +29,11 @@ export class ProfilePage implements OnInit, ViewWillEnter {
       : false;
   }
 
-  public update(): void {
-    console.log('update');
+  public update(role: boolean): void {
+    this.userService
+      .updateRole(role)
+      .pipe(take(1))
+      .subscribe((user: UserDTO) => (this.user = user));
   }
 
   private refresh(): void {

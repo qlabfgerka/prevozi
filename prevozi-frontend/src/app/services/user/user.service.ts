@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CityDTO } from 'src/app/models/city/city.model';
 import { UserDTO } from 'src/app/models/user/user.model';
 
 @Injectable({
@@ -14,5 +13,9 @@ export class UserService {
 
   public getUser(): Observable<UserDTO> {
     return this.httpClient.get<UserDTO>(`${this.hostname}/user`);
+  }
+
+  public updateRole(role: boolean): Observable<UserDTO> {
+    return this.httpClient.patch<UserDTO>(`${this.hostname}/user`, { role });
   }
 }

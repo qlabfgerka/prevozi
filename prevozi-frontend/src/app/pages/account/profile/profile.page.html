@@ -22,7 +22,7 @@
             color="primary"
             [checked]="hasRole('OFFER')"
             slot="start"
-            (ionChange)="update()"
+            (ionChange)="update(false)"
           ></ion-checkbox>
         </ion-item>
         <ion-item>
@@ -31,7 +31,7 @@
             color="primary"
             [checked]="hasRole('USE')"
             slot="start"
-            (ionChange)="update()"
+            (ionChange)="update(true)"
           ></ion-checkbox>
         </ion-item>
       </ion-card-content>
