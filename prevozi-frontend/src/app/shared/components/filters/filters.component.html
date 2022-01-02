@@ -1,0 +1,75 @@
+<ion-accordion-group>
+  <ion-accordion value="numbers">
+    <ion-item slot="header">
+      <ion-label>FILTERS</ion-label>
+    </ion-item>
+
+    <div class="flexbox" *ngIf="!isLoading" slot="content">
+      <form
+        [formGroup]="filterForm"
+        (ngSubmit)="filter()"
+        *ngIf="this.filterForm"
+        class="wide"
+      >
+        <ion-item>
+          <ion-label position="fixed">Departure</ion-label>
+          <ion-select
+            okText="Okay"
+            cancelText="Dismiss"
+            formControlName="departure"
+            slot="end"
+          >
+            <ion-select-option *ngFor="let city of cities" [value]="city.id">{{
+              city.value
+            }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-button (click)="openDepartureTime()">
+            Departure after
+          </ion-button>
+          <p slot="end" *ngIf="filterDTO.startTime">
+            {{ filterDTO.startTime | date: "short" }}
+          </p>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="fixed">Arrival</ion-label>
+          <ion-select
+            okText="Okay"
+            cancelText="Dismiss"
+            formControlName="arrival"
+            slot="end"
+          >
+            <ion-select-option *ngFor="let city of cities" [value]="city.id">{{
+              city.value
+            }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-button (click)="openArrivalTime()"> Arrival before </ion-button>
+          <p slot="end" *ngIf="filterDTO.endTime">
+            {{ filterDTO.endTime | date: "short" }}
+          </p>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="fixed">Price</ion-label>
+          <ion-input type="number" formControlName="price"></ion-input>
+        </ion-item>
+
+        <div class="break"></div>
+
+        <div class="center-text">
+          <ion-button color="danger" type="button" (click)="reset()">
+            RESET
+          </ion-button>
+
+          <ion-button color="success" type="submit">FILTER</ion-button>
+        </div>
+      </form>
+    </div>
+  </ion-accordion>
+</ion-accordion-group>
