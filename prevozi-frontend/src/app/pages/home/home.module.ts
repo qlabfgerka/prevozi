@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { MenuDialogModule } from 'src/app/shared/components/dialogs/menu-dialog/menu-dialog.module';
+import { FiltersModule } from 'src/app/shared/components/filters/filters.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { MenuDialogModule } from 'src/app/shared/components/dialogs/menu-dialog/
     IonicModule,
     HomePageRoutingModule,
     MenuDialogModule,
+    FiltersModule,
   ],
   declarations: [HomePage],
 })

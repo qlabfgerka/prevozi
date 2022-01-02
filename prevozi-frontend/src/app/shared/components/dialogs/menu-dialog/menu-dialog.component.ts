@@ -7,14 +7,14 @@ import { PopoverController } from '@ionic/angular';
   styleUrls: ['./menu-dialog.component.scss'],
 })
 export class MenuDialogComponent implements OnInit {
-  @Input() filter: string;
+  @Input() sort: string;
 
   constructor(private readonly popoverController: PopoverController) {}
 
   ngOnInit() {}
 
-  applyFilter(filter: string): void {
-    this.filter = filter;
-    this.popoverController.dismiss(filter);
+  applyFilter(sort: string): void {
+    this.sort = sort;
+    this.popoverController.dismiss(sort);
   }
 }

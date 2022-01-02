@@ -15,9 +15,16 @@
 <ion-content>
   <div class="flexbox">
     <div *ngIf="!isLoading">
+      <app-filters
+        (filterEvent)="filter($event)"
+        [filterDTO]="filters"
+      ></app-filters>
+
       <ion-card *ngFor="let ride of rides">
         <ion-card-header>
-          <ion-card-subtitle>
+          <ion-card-subtitle
+            [ngClass]="{'not-final': filters.end && ride.stops[ride.stops.length-1].id !== filters.end.toString()}"
+          >
             {{ ride.departure.value }}
             <span *ngFor="let stop of ride.stops"> -> {{ stop.value }} </span>
           </ion-card-subtitle>

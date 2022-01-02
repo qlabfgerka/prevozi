@@ -1,18 +1,26 @@
 <ion-list>
   <ion-item (click)="applyFilter('pa')">
-    <ion-icon slot="end" name="checkmark" *ngIf="filter === 'pa'"></ion-icon>
+    <ion-icon slot="end" name="checkmark" *ngIf="sort === 'pa'"></ion-icon>
     <ion-label> Price ascending </ion-label>
   </ion-item>
   <ion-item (click)="applyFilter('pd')">
-    <ion-icon slot="end" name="checkmark" *ngIf="filter === 'pd'"></ion-icon>
+    <ion-icon slot="end" name="checkmark" *ngIf="sort === 'pd'"></ion-icon>
     <ion-label> Price descending </ion-label>
   </ion-item>
+  <ion-item (click)="applyFilter('sd')"
+    ><ion-icon slot="end" name="checkmark" *ngIf="sort === 'sd'"></ion-icon>
+    <ion-label> Departure descending </ion-label>
+  </ion-item>
+  <ion-item (click)="applyFilter('sa')"
+    ><ion-icon slot="end" name="checkmark" *ngIf="sort === 'sa'"></ion-icon>
+    <ion-label> Departure ascending </ion-label>
+  </ion-item>
   <ion-item (click)="applyFilter('ad')">
-    <ion-icon slot="end" name="checkmark" *ngIf="filter === 'ad'"></ion-icon>
+    <ion-icon slot="end" name="checkmark" *ngIf="sort === 'ad'"></ion-icon>
     <ion-label> Arrival descending </ion-label>
   </ion-item>
   <ion-item (click)="applyFilter('aa')"
-    ><ion-icon slot="end" name="checkmark" *ngIf="filter === 'aa'"></ion-icon>
+    ><ion-icon slot="end" name="checkmark" *ngIf="sort === 'aa'"></ion-icon>
     <ion-label> Arrival ascending </ion-label>
   </ion-item>
 </ion-list>

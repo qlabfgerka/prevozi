@@ -1,11 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
+import { Filter } from 'src/models/filter/filter.model';
 import { Ride } from 'src/models/ride/ride.model';
 import { JwtAuthGuard } from '../user/auth/guards/jwt-auth.guard';
 import { RideService } from './ride.service';
@@ -15,9 +9,9 @@ export class RideController {
   constructor(private readonly rideService: RideService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get()
-  public async getRides(): Promise<Array<Ride>> {
-    return await this.rideService.getRides();
+  @Post('all')
+  public async getRides(@Body('filter') filter: Filter): Promise<Array<Ride>> {
+    return await this.rideService.getRides(filter);
   }
 
   @UseGuards(JwtAuthGuard)

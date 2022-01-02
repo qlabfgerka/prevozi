@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController, ViewWillEnter } from '@ionic/angular';
 import { finalize, take } from 'rxjs/operators';
+import { FilterDTO } from 'src/app/models/filter/filter.model';
 import { RideDTO } from 'src/app/models/ride/ride.model';
 import { RideService } from 'src/app/services/ride/ride.service';
 import { MenuDialogComponent } from 'src/app/shared/components/dialogs/menu-dialog/menu-dialog.component';
@@ -14,7 +15,8 @@ import { MenuDialogComponent } from 'src/app/shared/components/dialogs/menu-dial
 export class HomePage implements OnInit, ViewWillEnter {
   public isLoading: boolean;
   public rides: Array<RideDTO>;
-  public filter = 'ad';
+  public sort = 'aa';
+  public filters: FilterDTO;
 
   constructor(
     private readonly router: Router,
@@ -23,10 +25,16 @@ export class HomePage implements OnInit, ViewWillEnter {
   ) {}
 
   ionViewWillEnter(): void {
+    this.filters = new FilterDTO();
     this.refresh();
   }
 
   ngOnInit(): void {}
+
+  public filter(filter: FilterDTO): void {
+    this.filters = filter;
+    this.refresh();
+  }
 
   public navigateAddRide(): void {
     this.router.navigate(['/add']);
@@ -45,7 +53,7 @@ export class HomePage implements OnInit, ViewWillEnter {
       component: MenuDialogComponent,
       event: ev,
       componentProps: {
-        filter: this.filter,
+        sort: this.sort,
       },
     });
 
@@ -53,8 +61,8 @@ export class HomePage implements OnInit, ViewWillEnter {
 
     popover.onDidDismiss().then((data) => {
       if (data) {
-        this.filter = data.data;
-        this.sort();
+        this.sort = data.data;
+        this.sortRides();
       }
     });
   }
@@ -62,19 +70,19 @@ export class HomePage implements OnInit, ViewWillEnter {
   private refresh(): void {
     this.isLoading = true;
     this.rideService
-      .getRides()
+      .getRides(this.filters)
       .pipe(
         take(1),
         finalize(() => (this.isLoading = false))
       )
       .subscribe((rides: Array<RideDTO>) => {
         this.rides = rides;
-        this.sort();
+        this.sortRides();
       });
   }
 
-  private sort(): void {
-    switch (this.filter) {
+  private sortRides(): void {
+    switch (this.sort) {
       case 'ad':
         this.rides.sort((a, b) => (a.arrivalTime < b.arrivalTime ? 1 : -1));
         break;
@@ -86,6 +94,12 @@ export class HomePage implements OnInit, ViewWillEnter {
         break;
       case 'pa':
         this.rides.sort((a, b) => (a.price > b.price ? 1 : -1));
+        break;
+      case 'sd':
+        this.rides.sort((a, b) => (a.departureTime < b.departureTime ? 1 : -1));
+        break;
+      case 'sa':
+        this.rides.sort((a, b) => (a.departureTime > b.departureTime ? 1 : -1));
         break;
     }
   }
