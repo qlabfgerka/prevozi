@@ -112,7 +112,7 @@
       </ion-item>
       <span
         class="error"
-        *ngIf="errorControl.carColor.touched && errorControl.carColor.errors?.required"
+        *ngIf="errorControl.carBrand.touched && errorControl.carBrand.errors?.required"
       >
         Departure is required.
       </span>
@@ -131,7 +131,7 @@
       </ion-item>
       <span
         class="error"
-        *ngIf="errorControl.carColor.touched && errorControl.carColor.errors?.required && this.addRideForm.get('carBrand').value"
+        *ngIf="errorControl.carModel.touched && errorControl.carModel.errors?.required && this.addRideForm.get('carBrand').value"
       >
         Car model is required.
       </span>

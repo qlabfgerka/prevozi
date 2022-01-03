@@ -21,4 +21,12 @@ export class RideService {
   public addRide(ride: RideDTO): Observable<RideDTO> {
     return this.httpClient.post<RideDTO>(`${this.hostname}/ride`, ride);
   }
+
+  public bookRide(id: string): Observable<RideDTO> {
+    return this.httpClient.patch<RideDTO>(`${this.hostname}/ride/${id}`, {});
+  }
+
+  public getMyRides(): Observable<Array<RideDTO>> {
+    return this.httpClient.get<Array<RideDTO>>(`${this.hostname}/ride`);
+  }
 }

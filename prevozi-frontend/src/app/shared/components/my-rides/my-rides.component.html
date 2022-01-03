@@ -1,0 +1,3 @@
+<div class="flexbox" *ngIf="!isLoading">
+  <app-ride *ngFor="let ride of rides" [ride]="ride" [filters]=""> </app-ride>
+</div>

@@ -9,6 +9,8 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { MenuDialogModule } from 'src/app/shared/components/dialogs/menu-dialog/menu-dialog.module';
 import { FiltersModule } from 'src/app/shared/components/filters/filters.module';
+import { ConfirationDialogModule } from 'src/app/shared/components/dialogs/confiration-dialog/confiration-dialog.module';
+import { RideModule } from 'src/app/shared/components/ride/ride.module';
 
 @NgModule({
   imports: [
@@ -18,6 +20,8 @@ import { FiltersModule } from 'src/app/shared/components/filters/filters.module'
     HomePageRoutingModule,
     MenuDialogModule,
     FiltersModule,
+    ConfirationDialogModule,
+    RideModule,
   ],
   declarations: [HomePage],
 })
