@@ -33,4 +33,13 @@ export class UserService {
 
     return await this.dtoFunctions.userToDTO(user);
   }
+
+  public async updateRating(id: string, ratings: Array<number>): Promise<void> {
+    const user = await this.userModel.findById(id);
+    if (user.rating !== 0)
+      user.rating = (user.rating + ratings[0] * 0.6 + ratings[1] * 0.4) / 2;
+    else user.rating = user.rating + ratings[0] * 0.6 + ratings[1] * 0.4;
+
+    await user.save();
+  }
 }

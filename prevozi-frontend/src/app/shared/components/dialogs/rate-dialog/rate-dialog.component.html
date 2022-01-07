@@ -1,0 +1,30 @@
+<div class="margin">
+  <h1>Rate your experience with {{ username }}</h1>
+  <div class="flexbox">
+    <h2>Quality</h2>
+    <div class="break"></div>
+    <ion-icon
+      *ngFor="let el of ratedQuality; let i = index"
+      [name]="ratedQuality[i] ? 'star' : 'star-outline'"
+      size="large"
+      [color]="ratedQuality[i] ? 'success' : ''"
+      (click)="qualityClick(i)"
+    ></ion-icon>
+  </div>
+  <div class="flexbox margin-top">
+    <h2>Punctuality</h2>
+    <div class="break"></div>
+    <ion-icon
+      *ngFor="let el of ratedPunctuality; let i = index"
+      [name]="ratedPunctuality[i] ? 'star' : 'star-outline'"
+      size="large"
+      [color]="ratedPunctuality[i] ? 'success' : ''"
+      (click)="punctualityClick(i)"
+    ></ion-icon>
+  </div>
+  <div class="flexbox margin-top">
+    <ion-button color="primary" [disabled]="disabled" (click)="rate()"
+      >RATE</ion-button
+    >
+  </div>
+</div>

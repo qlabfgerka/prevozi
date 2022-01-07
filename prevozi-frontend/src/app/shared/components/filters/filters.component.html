@@ -4,7 +4,7 @@
       <ion-label>FILTERS</ion-label>
     </ion-item>
 
-    <div class="flexbox" *ngIf="!isLoading" slot="content">
+    <div class="flexbox" *ngIf="!isLoading && filterDTO" slot="content">
       <form
         [formGroup]="filterForm"
         (ngSubmit)="filter()"

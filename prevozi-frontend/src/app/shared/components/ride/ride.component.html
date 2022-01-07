@@ -1,0 +1,117 @@
+<div class="padding">
+  <ion-card *ngIf="ride">
+    <ion-card-header>
+      <ion-badge class="margin-right" color="danger" *ngIf="full(ride)"
+        >FULL</ion-badge
+      >
+      <ion-badge class="margin-right" color="warning" *ngIf="userBooked(ride)"
+        >BOOKED</ion-badge
+      >
+      <ion-badge class="margin-right" color="success" *ngIf="myBooking(ride)"
+        >MY BOOKING</ion-badge
+      >
+      <ion-badge class="margin-right" color="danger" *ngIf="expired(ride)"
+        >EXPIRED</ion-badge
+      >
+      <ion-card-subtitle
+        [ngClass]="{
+          'not-final':
+            filters &&
+            filters.end &&
+            ride.stops[ride.stops.length - 1].id !== filters.end.toString()
+        }"
+      >
+        {{ ride.departure.value }}
+        <span *ngFor="let stop of ride.stops"> -> {{ stop.value }} </span>
+      </ion-card-subtitle>
+      <ion-card-title>{{ ride.owner.username }}</ion-card-title>
+      <ion-card-subtitle *ngIf="ride.owner.rating !== 0">
+        <ion-icon
+          *ngFor="let el of [].constructor(round(ride.owner.rating))"
+          name="star"
+          color="success"
+          size="small"
+        ></ion-icon>
+        <ion-icon
+          *ngFor="let el of [].constructor(5 - round(ride.owner.rating))"
+          name="star-outline"
+          size="small"
+        >
+        </ion-icon>
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <h2>Car</h2>
+            <p>
+              {{ ride.carBrand.value }} {{ ride.carBrand.models[0] }},
+              {{ ride.carColor.value }}
+            </p>
+            <p>
+              Registration plate: <b>{{ ride.carRegistration }}</b>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Departure time</h2>
+            <p>{{ ride.departureTime | date: "medium" }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Arrival time</h2>
+            <p>{{ ride.arrivalTime | date: "medium" }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Luggage per person</h2>
+            <p>{{ ride.luggage }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Price</h2>
+            <p>{{ ride.price }}€</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Spots left</h2>
+            <p>{{ ride.spots - confirmed(ride) }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <div class="flexbox">
+        <ion-button
+          color="tertiary"
+          *ngIf="!canBook(ride)"
+          (click)="bookRide(ride)"
+          >BOOK</ion-button
+        >
+        <ion-button
+          color="tertiary"
+          (click)="openDetails(ride)"
+          *ngIf="myBooking(ride)"
+          >DETAILS</ion-button
+        >
+        <ion-button
+          color="danger"
+          (click)="cancelBooking(ride)"
+          *ngIf="userBooked(ride)"
+          >CANCEL BOOKING</ion-button
+        >
+        <ion-button
+          color="success"
+          (click)="rate(ride.owner)"
+          *ngIf="userBooked(ride) && !myBooking(ride) && expired(ride)"
+          >RATE</ion-button
+        >
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

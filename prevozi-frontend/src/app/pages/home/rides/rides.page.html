@@ -7,4 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <div class="flexbox" *ngIf="!isLoading">
+    <app-reservations
+      [reservations]="ride.reservations"
+      [rideId]="ride.id"
+      [end]="ride.arrivalTime"
+      class="wide"
+    ></app-reservations>
+  </div>
+</ion-content>

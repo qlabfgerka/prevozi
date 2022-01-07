@@ -4,7 +4,6 @@ import { PopoverController } from '@ionic/angular';
 import { finalize, take } from 'rxjs/operators';
 import { CityDTO } from 'src/app/models/city/city.model';
 import { FilterDTO } from 'src/app/models/filter/filter.model';
-import { RideDTO } from 'src/app/models/ride/ride.model';
 import { CityService } from 'src/app/services/city/city.service';
 import { TimeDialogComponent } from '../dialogs/time-dialog/time-dialog.component';
 

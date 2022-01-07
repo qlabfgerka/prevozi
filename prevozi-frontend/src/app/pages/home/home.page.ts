@@ -44,8 +44,8 @@ export class HomePage implements OnInit, ViewWillEnter {
     this.router.navigate([`/profile`]);
   }
 
-  public openRide(id: string): void {
-    this.router.navigate([`/rides/${id}`]);
+  public onBookEvent(): void {
+    this.refresh();
   }
 
   public async openMenu(ev: any): Promise<void> {

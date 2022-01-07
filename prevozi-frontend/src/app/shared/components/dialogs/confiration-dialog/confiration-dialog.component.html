@@ -1,0 +1,25 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>{{ subtitle }}</ion-card-subtitle>
+    <ion-card-title>{{ title }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{ content }}
+  </ion-card-content>
+
+  <div class="right">
+    <ion-button
+      color="success"
+      fill="clear"
+      (click)="buttonClick(confirmButton)"
+      >{{ confirmButton }}</ion-button
+    >
+    <ion-button
+      color="danger"
+      fill="clear"
+      (click)="buttonClick(cancelButton)"
+      >{{ cancelButton }}</ion-button
+    >
+  </div>
+</ion-card>

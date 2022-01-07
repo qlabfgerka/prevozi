@@ -1,0 +1,43 @@
+<div class="flexbox" *ngIf="reservations && reservations.length === 0">
+  <h1>There are no reservations for this ride.</h1>
+</div>
+<ion-list *ngIf="reservations && end">
+  <ion-accordion-group>
+    <ion-accordion *ngFor="let reservation of reservations">
+      <ion-item slot="header">
+        <ion-label>{{ reservation.user.username }}</ion-label>
+      </ion-item>
+
+      <div class="flexbox" slot="content">
+        <ion-button
+          color="success"
+          size="small"
+          *ngIf="!reservation.confirmed"
+          (click)="accept(reservation)"
+          >ACCEPT</ion-button
+        >
+        <ion-button color="danger" size="small" (click)="remove(reservation)"
+          >REMOVE</ion-button
+        >
+      </div>
+      <ion-item slot="content" lines="none" *ngIf="confirmed(reservation)">
+        <ion-label>PICKED UP</ion-label>
+        <ion-checkbox
+          color="primary"
+          slot="start"
+          [checked]="pickedUp(reservation)"
+          (ionChange)="markPickedUp(reservation.user.id)"
+        ></ion-checkbox>
+      </ion-item>
+      <div class="flexbox" slot="content">
+        <ion-button
+          color="success"
+          size="small"
+          *ngIf="expired() && confirmed(reservation)"
+          (click)="rate(reservation.user)"
+          >RATE</ion-button
+        >
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-list>

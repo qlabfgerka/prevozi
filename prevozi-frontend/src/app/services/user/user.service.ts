@@ -18,4 +18,10 @@ export class UserService {
   public updateRole(role: boolean): Observable<UserDTO> {
     return this.httpClient.patch<UserDTO>(`${this.hostname}/user`, { role });
   }
+
+  public rateUser(userId: string, ratings: Array<number>): Observable<void> {
+    return this.httpClient.patch<void>(`${this.hostname}/user/${userId}`, {
+      ratings,
+    });
+  }
 }

@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { RidesPageRoutingModule } from './rides-routing.module';
 
 import { RidesPage } from './rides.page';
+import { ReservationsModule } from 'src/app/shared/components/reservations/reservations.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RidesPageRoutingModule
+    RidesPageRoutingModule,
+    ReservationsModule,
   ],
-  declarations: [RidesPage]
+  declarations: [RidesPage],
 })
 export class RidesPageModule {}
