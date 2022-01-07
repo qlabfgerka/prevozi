@@ -5,6 +5,7 @@ import {
   Request,
   Patch,
   Body,
+  Param,
 } from '@nestjs/common';
 import { User } from 'src/models/user/user.model';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
@@ -27,5 +28,14 @@ export class UserController {
     @Body('role') role: boolean,
   ): Promise<User> {
     return await this.userService.updateRole(req.user.id, role);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  public async updateRating(
+    @Param('id') id: string,
+    @Body('ratings') ratings: Array<number>,
+  ): Promise<void> {
+    await this.userService.updateRating(id, ratings);
   }
 }
