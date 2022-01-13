@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -12,6 +13,7 @@ import { RideService } from 'src/app/services/ride/ride.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { AuthService } from 'src/app/services/user/auth/auth.service';
 import { forkJoin } from 'rxjs';
+import { SocketService } from 'src/app/services/socket/socket.service';
 
 declare var H: any;
 
@@ -20,7 +22,7 @@ declare var H: any;
   templateUrl: './location.page.html',
   styleUrls: ['./location.page.scss'],
 })
-export class LocationPage implements OnInit, AfterViewInit {
+export class LocationPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('map') public mapElement: ElementRef;
   public ride: RideDTO;
   public isLoading: boolean;
@@ -31,23 +33,26 @@ export class LocationPage implements OnInit, AfterViewInit {
   constructor(
     private readonly rideService: RideService,
     private readonly route: ActivatedRoute,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly socketService: SocketService
   ) {}
 
+  ngOnDestroy(): void {
+    this.socketService.stopListening();
+  }
+
   ngAfterViewInit(): void {
-    this.isLoading = true;
-    this.initMap();
-
-    if (this.interval) clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      this.printCurrentPosition();
-      this.isLoading = false;
-    }, 1000);
-  }
-
-  ngOnInit(): void {
     this.refresh();
+
+    this.socketService.socket.on(
+      'getLocation',
+      (data: { lat: number; lon: number }) => {
+        this.setMarker(data.lat, data.lon);
+      }
+    );
   }
+
+  ngOnInit(): void {}
 
   private refresh(): void {
     this.isLoading = true;
@@ -55,33 +60,37 @@ export class LocationPage implements OnInit, AfterViewInit {
       .pipe(
         take(1),
         mergeMap((paramMap) =>
-          forkJoin([this.rideService.getRide(paramMap.get('id')).pipe(take(1)), this.authService
-          .getUsername()
-          .pipe(take(1))])
+          forkJoin([
+            this.rideService.getRide(paramMap.get('id')).pipe(take(1)),
+            this.authService.getUsername().pipe(take(1)),
+          ])
         )
       )
       .subscribe((response) => {
         this.ride = response[0];
         this.username = response[1];
         this.isLoading = false;
+        this.socketService.joinRoom(this.ride.id);
+
+        this.initMap();
+        if (this.ride.owner.username === this.username) {
+          if (this.interval) clearInterval(this.interval);
+          this.interval = setInterval(() => {
+            this.printCurrentPosition();
+          }, 1000);
+        }
       });
   }
 
   private async printCurrentPosition(): Promise<void> {
     const coordinates = await Geolocation.getCurrentPosition();
 
-    let marker = new H.map.Marker({
-      lat: coordinates.coords.latitude,
-      lng: coordinates.coords.longitude,
-    });
-
-    if (this.map) {
-      this.map.addObject(marker);
-      this.map.setCenter({
-        lat: coordinates.coords.latitude,
-        lng: coordinates.coords.longitude,
-      });
-    }
+    this.socketService.sendLocation(
+      this.ride.id,
+      coordinates.coords.latitude,
+      coordinates.coords.longitude
+    );
+    this.setMarker(coordinates.coords.latitude, coordinates.coords.longitude);
   }
 
   private initMap(): void {
@@ -108,5 +117,20 @@ export class LocationPage implements OnInit, AfterViewInit {
         new H.mapevents.MapEvents(this.map)
       );
     }, 50);
+  }
+
+  private setMarker(lat: number, lng: number): void {
+    let marker = new H.map.Marker({
+      lat,
+      lng,
+    });
+
+    if (this.map) {
+      this.map.addObject(marker);
+      this.map.setCenter({
+        lat,
+        lng,
+      });
+    }
   }
 }
