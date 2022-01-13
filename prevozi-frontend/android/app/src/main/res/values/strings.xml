@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Prevozi</string>
+    <string name="title_activity_main">Prevozi</string>
+    <string name="package_name">inc.premzl.prevozi</string>
+    <string name="custom_url_scheme">inc.premzl.prevozi</string>
+</resources>

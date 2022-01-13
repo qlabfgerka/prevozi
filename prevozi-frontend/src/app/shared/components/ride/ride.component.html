@@ -111,6 +111,12 @@
           *ngIf="userBooked(ride) && !myBooking(ride) && expired(ride)"
           >RATE</ion-button
         >
+        <ion-button
+          color="success"
+          (click)="track(ride)"
+          *ngIf="(userBooked(ride) || myBooking(ride)) && !expired(ride)"
+          >TRACK</ion-button
+        >
       </div>
     </ion-card-content>
   </ion-card>

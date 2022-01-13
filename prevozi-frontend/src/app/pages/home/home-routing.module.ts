@@ -24,6 +24,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'rides/track/:id',
+    loadChildren: () =>
+      import('./rides/location/location.module').then(
+        (m) => m.LocationPageModule
+      ),
+  },
+  {
     path: 'rides/:id',
     loadChildren: () =>
       import('./rides/rides.module').then((m) => m.RidesPageModule),

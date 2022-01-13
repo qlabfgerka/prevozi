@@ -76,6 +76,10 @@ export class RideComponent implements OnInit {
     this.router.navigate([`/rides/${ride.id}`]);
   }
 
+  public track(ride: RideDTO): void {
+    this.router.navigate([`/rides/track/${ride.id}`]);
+  }
+
   public cancelBooking(ride: RideDTO): void {
     const reservation = ride.reservations.find(
       (reservation: ReservationDTO) =>
